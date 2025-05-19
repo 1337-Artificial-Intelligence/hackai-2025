@@ -1,143 +1,184 @@
 # %% [markdown]
 # # 🚀 Fine-tuning Language Models with GRPO for Math Reasoning
 # 
-# Welcome to this hands-on workshop on fine-tuning language models using Group Relative Policy Optimization (GRPO)! In this session, we'll learn how to improve a model's mathematical reasoning abilities through a technique called GRPO.
+# This notebook demonstrates how to improve a language model's math reasoning abilities using Group Relative Policy Optimization (GRPO).
 # 
-# ## 🎯 What You'll Learn
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/your-repo/hackai-challenges/blob/main/py/alignment_grpo_qwen3_math.py)
 # 
-# 1. Understanding GRPO and why it's useful for math reasoning
-# 2. Setting up a model for fine-tuning
-# 3. Training the model with GRPO
-# 4. Testing the improved model
+# ## 📚 What You'll Learn
 # 
-# ## ⏱️ Time Breakdown (1 Hour)
-# - Introduction & Setup (15 minutes)
-# - Model Training (30 minutes)
-# - Testing & Discussion (15 minutes)
+# 1. How to fine-tune a language model for better math reasoning
+# 2. Understanding GRPO and its advantages over other methods
+# 3. Implementing reward functions for math problem-solving
 # 
-# ## 🔗 Quick Links
-# - [Open in Colab](https://colab.research.google.com/github/your-repo/alignment_grpo_qwen3_math.ipynb)
-# - [Hugging Face Model](https://huggingface.co/Qwen/Qwen3-1.7B)
+# ## 🎯 Why GRPO?
 # 
-# ---
+# GRPO (Group Relative Policy Optimization) is a powerful technique that helps language models learn better by:
+# - Grouping similar problems together
+# - Learning from relative performance within groups
+# - Improving reasoning step by step
 # 
-# ## 1. What is GRPO? 🤔
-# 
-# GRPO (Group Relative Policy Optimization) is a technique that helps language models get better at specific tasks by:
-# - Learning from examples in groups
-# - Getting feedback on their answers
-# - Improving step by step
-# 
-# Think of it like learning math:
-# - You solve problems
-# - Your teacher checks your work
-# - You learn from your mistakes
-# - You get better over time
-# 
-# ![GRPO Learning Process](https://miro.medium.com/v2/resize:fit:1400/1*84PSf3d1-OGN10y_2H-XdQ.png)
-# 
-# ## 2. Setting Up Our Environment 🛠️
-# 
-# First, let's install the tools we need:
+# ## 🔧 Setup and Dependencies
 
-# %% [code]
+# %% [markdown]
+# ### 1. Install Required Libraries
+# First, let's install the necessary packages:
+
+# %%
 !pip install -q transformers datasets trl torch sentence-transformers pypdf math_verify
 
 # %% [markdown]
-# ## 3. Loading Our Model 🎯
-# 
-# We'll use Qwen3-1.7B, a small but powerful model that's perfect for learning:
-# - Small enough to run on free Colab
-# - Good at understanding math
-# - Fast to train
+# ### 2. Import Libraries and Set Up Environment
 
-# %% [code]
+# %%
+import re
+from typing import List
+
+# Third-party libraries
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-# Load the model and tokenizer
-model_name = "Qwen/Qwen3-1.7B"
-model = AutoModelForCausalLM.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-# %% [markdown]
-# ## 4. Preparing Our Math Problems 📚
-# 
-# We'll use a dataset of math problems to train our model. Each problem has:
-# - A question
-# - A step-by-step solution
-# - The final answer
-
-# %% [code]
-from datasets import load_dataset
-
-# Load math problems
-dataset = load_dataset("lighteval/MATH-Hard", 'default')
-print("Sample problem:", dataset['train'][0]['problem'])
-
-# %% [markdown]
-# ## 5. Training with GRPO 🚂
-# 
-# Now comes the exciting part! We'll train our model using GRPO to make it better at solving math problems.
-# 
-# The training process:
-# 1. Model tries to solve a problem
-# 2. We check if the answer is correct
-# 3. Model learns from its mistakes
-# 4. Repeat!
-
-# %% [code]
+import warnings
+from datasets import load_dataset, Dataset
+from pypdf import PdfReader
+from sentence_transformers import CrossEncoder
+from transformers import AutoModelForCausalLM, AutoTokenizer, TextStreamer
 from trl import GRPOConfig, GRPOTrainer
 
-# Set up training
-training_config = GRPOConfig(
-    learning_rate=2e-4,
-    max_steps=50,  # Quick training for demo
-    per_device_train_batch_size=1
+# Custom/project-specific libraries
+from math_verify import LatexExtractionConfig, parse, verify
+from unsloth import FastLanguageModel, is_bfloat16_supported
+
+# %% [markdown]
+# ### 3. Basic Configuration
+# Let's set up our basic configuration for the model and training:
+
+# %%
+# Set device (use GPU if available)
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+# Ignore warnings for cleaner output
+warnings.filterwarnings("ignore")
+
+# Model configuration
+MODEL = "unsloth/Qwen3-1.7B"  # Small, efficient model good for learning
+max_seq_length = 2048         # Length for input/output
+NEW_MODEL = "Qwen3_1.7B-GRPO-math-reasoning"
+
+# Prompt template for consistent responses
+SYSTEM_PROMPT = """
+Respond in the following format:
+<reasoning>
+Show your step-by-step thinking process
+</reasoning>
+<answer>
+Your final answer here
+</answer>
+"""
+
+# Dataset for training
+DATASET = "lighteval/MATH-Hard"  # Math problems dataset
+
+# %% [markdown]
+# ### 4. Load and Prepare the Dataset
+# We'll use a dataset of math problems to train our model:
+
+# %%
+def get_math_questions(split="train") -> Dataset:
+    """Load and prepare math problems dataset."""
+    data = load_dataset(DATASET, 'default')[split]
+    data = data.map(lambda x: {
+            'prompt': [
+                {'role': 'system', 'content': SYSTEM_PROMPT},
+                {'role': 'user', 'content': x['problem']}
+            ],
+            'answer': x['solution'],
+            'question': x['problem']
+        }).remove_columns(['problem', 'solution','level','type'])
+    return data
+
+# Load training and test datasets
+train_dataset = get_math_questions(split="train")
+test_dataset = get_math_questions(split="test")
+
+# %% [markdown]
+# ### 5. Define Reward Functions
+# These functions help the model learn what makes a good math solution:
+
+# %%
+def accuracy_reward(completions: List[dict], **kwargs) -> List[float]:
+    """Reward function that checks if the answer matches the correct solution."""
+    solutions = kwargs['answer']
+    completion_contents = [completion[0]["content"] for completion in completions]
+    rewards = []
+    for content, solution in zip(completion_contents, solutions):
+        try:
+            # Parse and verify the solution
+            gold_parsed = parse(solution, extraction_mode="first_match", 
+                              extraction_config=[LatexExtractionConfig()])
+            answer_parsed = parse(content, extraction_mode="first_match", 
+                                extraction_config=[LatexExtractionConfig()])
+            if len(gold_parsed) != 0:
+                rewards.append(float(verify(answer_parsed, gold_parsed)))
+            else:
+                rewards.append(1.0)
+        except Exception:
+            rewards.append(0.0)
+    return rewards
+
+# %% [markdown]
+# ### 6. Configure Training Parameters
+# Set up the training configuration for GRPO:
+
+# %%
+# Training configuration
+training_args = GRPOConfig(
+    lr_scheduler_type="cosine",          # Smooth learning rate adjustment
+    per_device_train_batch_size=1,       # Small batch size for memory efficiency
+    gradient_accumulation_steps=1,       # Accumulate gradients for stability
+    warmup_steps=5,                      # Quick warmup for faster learning
+    max_steps=50,                        # Number of training steps
+    learning_rate=2e-4,                  # Learning rate
+    optim="adamw_8bit",                  # Memory-efficient optimizer
+    max_grad_norm=0.1,                   # Prevent gradient explosion
+    max_prompt_length=500,               # Maximum input length
+    max_completion_length=1024,          # Maximum output length
+    seed=3407,                           # For reproducibility
+    output_dir="qwen3_1_7B_grpo_math"    # Save directory
+)
+
+# %% [markdown]
+# ### 7. Train the Model
+# Now we'll train our model using GRPO:
+
+# %%
+# Initialize the trainer
+trainer = GRPOTrainer(
+    model=model,                    # Our language model
+    processing_class=tokenizer,     # Text processor
+    reward_funcs=[accuracy_reward], # Reward function
+    args=training_args,            # Training configuration
+    train_dataset=train_dataset    # Training data
 )
 
 # Start training
-trainer = GRPOTrainer(
-    model=model,
-    args=training_config,
-    train_dataset=dataset['train']
-)
-
 trainer.train()
 
 # %% [markdown]
-# ## 6. Testing Our Model 🧪
-# 
-# Let's see how well our model can solve math problems now!
-
-# %% [code]
-def solve_math_problem(question):
-    inputs = tokenizer(question, return_tensors="pt")
-    outputs = model.generate(**inputs, max_length=200)
-    return tokenizer.decode(outputs[0])
-
-# Try it out!
-test_question = "If x + y = 10 and x - y = 4, what is x?"
-print("Question:", test_question)
-print("Model's answer:", solve_math_problem(test_question))
-
-# %% [markdown]
 # ## 🎉 Congratulations!
+# You've successfully fine-tuned a language model using GRPO for better math reasoning!
 # 
-# You've just:
-# 1. Learned about GRPO
-# 2. Set up a language model
-# 3. Trained it to solve math problems
-# 4. Tested its abilities
+# ## 📝 Key Takeaways
+# 1. GRPO helps models learn better by comparing performance within groups
+# 2. Reward functions guide the model to produce better solutions
+# 3. Step-by-step reasoning is crucial for math problem-solving
 # 
-# ## 📚 Further Learning
-# - Try different math problems
-# - Experiment with training settings
-# - Learn more about GRPO in the [documentation](https://huggingface.co/docs/trl/main/en/grpo_trainer)
+# ## 🔍 Next Steps
+# 1. Try different reward functions
+# 2. Experiment with different model sizes
+# 3. Test on more complex math problems
 # 
 # ## ⚠️ Note
-# This is a simplified version for learning. Real-world applications would need:
-# - More training time
+# This is a simplified version for learning purposes. For production use, you would need:
+# - More training steps
 # - Better reward functions
-# - More evaluation
-# - Larger models
+# - Proper evaluation metrics
+# - Larger models for better performance
