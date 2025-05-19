@@ -1,3 +1,5 @@
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NouamaneTazi/hackai-challenges/blob/main/new_notebooks/data_tokenization_bpe.ipynb)
+
 # ---
 # jupyter:
 #   jupytext:
@@ -12,39 +14,30 @@
 # ---
 
 # %% [markdown] id="5b9c8726"
-# # 🏆 Tokenization Challenge: Teach a Model to Read
+# # 🏆 Tokenization Challenge: Understanding How AI Reads Text
 #
-# Welcome to the Tokenization Challenge! In this notebook, you'll learn about tokenization techniques used in large language models and implement a mini Byte Pair Encoding (BPE) tokenizer yourself.
+# Welcome to the Tokenization Challenge! In this notebook, you'll learn about how AI models process text by breaking it down into smaller pieces called tokens. We'll build a simple tokenizer from scratch to understand the process better.
 
 # %% [markdown] id="1b195729"
 # ## 1. 🔍 What is Tokenization?
 #
-# Tokenization is the process of converting raw text into smaller units, called **tokens**, which are understandable by language models.
+# Tokenization is like breaking down a sentence into smaller pieces that an AI can understand. Think of it like cutting a sentence into words or even smaller parts.
 #
-# ### Why Tokenize?
-# - Converts text into integers for neural networks.
-# - Helps the model generalize by splitting into reusable parts.
+# ### Why Do We Need Tokenization?
+# - AI models work with numbers, not text. Tokenization helps convert text into numbers.
+# - It helps the AI understand patterns in language better.
 #
-# ### Common Tokenization Techniques
-# - **Word-level**: Splits on spaces. E.g., `"hello world"` → `["hello", "world"]`
-# - **Character-level**: Every character is a token. E.g., `"hello"` → `["h", "e", "l", "l", "o"]`
-# - **Subword-level**: Mixes both worlds. E.g., `"playing"` → `["play", "##ing"]`
+# ### Different Ways to Tokenize:
+# - **Word-level**: Splits text into words. Example: `"hello world"` → `["hello", "world"]`
+# - **Character-level**: Splits into individual letters. Example: `"hello"` → `["h", "e", "l", "l", "o"]`
+# - **Subword-level**: Splits into parts of words. Example: `"playing"` → `["play", "##ing"]`
 #
-# ### Tokenization Schemes
-# Modern language models rely on different tokenization schemes to convert raw text into model-readable tokens.
-# - Byte Pair Encoding (BPE) iteratively merges the most frequent pairs of characters or subwords, producing variable-length tokens that capture common patterns like prefixes and suffixes.
-# - WordPiece, used in BERT, works similarly but selects merges based on maximizing the likelihood of the training data, resulting in tokens prefixed with ## to indicate subwords.
-# - Unigram Language Model, used in models like SentencePiece, takes a probabilistic approach: it starts with a large vocabulary and prunes tokens based on their likelihood, allowing multiple ways to tokenize the same text.
-#
-# These schemes differ in how they balance vocabulary size, token granularity, and computational efficiency. For instance, BPE and WordPiece are deterministic and fast, while Unigram offers more flexibility in multilingual or noisy settings. There is no need to understand the intricacies of these tokenization schemes, except for BPE, you will need to implement a part of it in this notebook.
+# In this notebook, we'll learn about Byte Pair Encoding (BPE), which is used by many popular AI models like GPT. BPE is smart because it can break down words into meaningful parts that it sees often in text.
 
 # %% [markdown] id="acf191c1"
-# ## 2. 🤖 Visualizing Pretrained Tokenizers
+# ## 2. 🤖 Let's See How Different AI Models Tokenize Text
 #
-# Let's see how different tokenizers handle a sample sentence.
-#
-# You need to have the `transformers` and `tiktoken` libraries installed.
-#
+# We'll use some pre-built tools to see how different AI models break down text. This will help us understand what we're trying to build.
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="159e5deb" outputId="20b53f5c-ced1-4e06-9a31-c567f012bc9b"
 # !pip install transformers tiktoken --quiet
@@ -72,22 +65,19 @@ print("TikToken input_ids:", enc.encode(sentence))
 # %% [markdown] id="cacc30b9"
 # ## 3. 🧠 Understanding Byte Pair Encoding (BPE)
 #
-# BPE builds subword vocabulary by repeatedly merging the most frequent pair of tokens.
+# BPE is like learning to read by first learning letters, then common letter pairs, then longer combinations. Here's how it works:
 #
-# ### BPE Algorithm Steps
-# 1. Initialize vocabulary with all characters in the corpus.
-# 2. Count frequency of adjacent token pairs.
-# 3. Merge the most frequent pair.
-# 4. Repeat until desired vocabulary size is reached.
+# 1. Start with all individual letters as tokens
+# 2. Find the most common pair of letters that appear together
+# 3. Combine that pair into a new token
+# 4. Repeat until we have enough tokens to handle most words
 #
-# We'll now implement this tokenizer step by step.
-#
+# Let's build our own simple BPE tokenizer step by step!
 
 # %% [markdown] id="fee328ee"
-# ## 4. 📄 Sample Corpus
+# ## 4. 📄 Our Training Data
 #
-# We'll use a small toy dataset for training our BPE tokenizer.
-#
+# We'll use a small dataset of stories to train our tokenizer. This will help us learn common patterns in text.
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="tqatvGRRUNv1" outputId="0fd7cecd-8f7b-4d36-b019-50f3fa9362b6"
 # !pip install datasets
@@ -104,8 +94,7 @@ corpus = [example["text"] for example in dataset]
 # %% [markdown] id="4a1d3666"
 # ## 🔧 Step 1: Pre-tokenization
 #
-# We start by counting words occurences, and splitting each word into characters, this will help us count the pairs occurences
-#
+# First, we'll count how often each word appears in our text and split each word into its letters. This helps us find common patterns.
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="85975841" outputId="e4cd0e2c-9884-4d03-aa26-00ab0638a172"
 from collections import defaultdict
@@ -122,28 +111,26 @@ print(word_freqs)
 print(splits)
 
 # %% [markdown] id="TTOwryd_eO2f"
-# Now we need to compute the base vocabulary, with all characters from the vocab
+# Now we need to create our starting vocabulary with all the letters we see in our text
 
 # %% id="cDRjZjiNeVWA" colab={"base_uri": "https://localhost:8080/"} outputId="683f4a31-5056-49cb-82c7-a799a7890408"
 alphabet = []
 
 for word in word_freqs.keys():
     for letter in word:
-        # add the letters that are not already in alphabet
-        # 2 lines
+        if letter not in alphabet:
+            alphabet.append(letter)
 
 alphabet.sort()
 
-# we need to add some specicial tokens like for example the end of text
+# we need to add some special tokens like for example the end of text
 vocab = alphabet + ["<|endoftext|>"]
 vocab
-
 
 # %% [markdown] id="ccd34cc6"
 # ## 🔧 Step 2: Count Token Pairs
 #
-# Implement `compute_pair_freqs` which counts how often symbol pairs occur in the vocab.
-#
+# Now we'll count how often pairs of letters appear together. This helps us find common patterns to combine.
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="4782b38a" outputId="47d4da61-19bc-4923-ce7e-ad0fb787785e"
 def compute_pair_freqs(splits):
@@ -154,8 +141,7 @@ def compute_pair_freqs(splits):
             continue
         for i in range(len(split) - 1):
             pair = (split[i], split[i + 1])
-            # update the pair_freqs dict with the appropriate value
-            # 1 line
+            pair_freqs[pair] += freq
     return pair_freqs
 
 pair_freqs = compute_pair_freqs(splits)
@@ -169,19 +155,21 @@ for i, key in enumerate(pair_freqs.keys()):
 # ## 🔧 Step 3: Merge Most Frequent Pair
 
 # %% [markdown] id="Ns9vM0UDqK61"
-# We need to find the most frequent pair by looping over `pair_freqs`
+# Let's find the pair of letters that appears most often in our text
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="0WlM0KxZqP7w" outputId="d77b8eb6-d0ae-4cf9-886d-39a98f2585ef"
 best_pair = ""
 max_freq = None
 
-# implement a simple for loop to get the best_pair, and it's max_freq
+for pair, freq in pair_freqs.items():
+    if max_freq is None or max_freq < freq:
+        best_pair = pair
+        max_freq = freq
 
 print(best_pair, max_freq)
 
-
 # %% [markdown] id="ypek5u42Ouqr"
-# Next, merge the most frequent pair, add it to the vocabulary, and replace all its occurrences in splits.
+# Now let's combine this most frequent pair into a new token and update our vocabulary
 
 # %% id="69f7f7b5"
 def merge_pair(a, b, splits, vocab):
@@ -192,48 +180,46 @@ def merge_pair(a, b, splits, vocab):
             continue
 
         i = 0
-        # A bit more complicated: implement the merging logic
-        # We need to iterate over the split, for each pair, if it matches the pair (a,b) we need to merge, else we continue
-        # in the end the we update the splits dict with the new split after merging
-        # ~5 or 6 lines
+        while i < len(split) - 1:
+            if split[i] == a and split[i + 1] == b:
+                split = split[:i] + [a+b] + split[i + 2:]
+            else:
+                i += 1
+        splits[word] = split
     return splits, vocab
-
 
 # %% [markdown] id="e1047334"
 # ## 🔁 Step 4: Full BPE Training Loop
 #
-# Now we'll combine everything into a training function that runs until we reach the desired vocab size. We need to keep track of how to merge tokens, in the same order that the tokenizer was trained so that we can tokenize in the following step
-#
+# Now we'll put everything together to train our tokenizer. We'll keep merging pairs until we have enough tokens to handle most words.
 
 # %% id="9bd6d7a5"
 def train_bpe(vocab, splits, vocab_size=1000):
-  merges = {}
-  vocab = vocab.copy()
-  splits = splits.copy()
-  while len(vocab) < vocab_size:
-      pair_freqs = compute_pair_freqs(splits)
-      best_pair = ""
-      max_freq = None
-      for pair, freq in pair_freqs.items():
-          if max_freq is None or max_freq < freq:
-              best_pair = pair
-              max_freq = freq
-              merges[best_pair] = best_pair[0] + best_pair[1]
-      splits, vocab = merge_pair(*best_pair, splits, vocab)
-  return merges
+    merges = {}
+    vocab = vocab.copy()
+    splits = splits.copy()
+    while len(vocab) < vocab_size:
+        pair_freqs = compute_pair_freqs(splits)
+        best_pair = ""
+        max_freq = None
+        for pair, freq in pair_freqs.items():
+            if max_freq is None or max_freq < freq:
+                best_pair = pair
+                max_freq = freq
+                merges[best_pair] = best_pair[0] + best_pair[1]
+        splits, vocab = merge_pair(*best_pair, splits, vocab)
+    return merges
 
 # This might take a lot of time, you try to reduce the vocab size to get a fertility of at least 2 (for fertility def check below)
 merges_1000 = train_bpe(vocab, splits, vocab_size=1000)
 merges_10000 = train_bpe(vocab, splits, vocab_size=10000)
 
-
 # %% [markdown] id="14f0545f"
 # ## ✅ Step 5: Tokenize New Words
 #
-# Build a function to tokenize words using the learned merges.
-#
+# Now we can use our trained tokenizer to break down new words into tokens!
 
-# %% colab={"base_uri": "https://localhost:8080/"} id="c36b8b86" outputId="97370cd9-8c86-47eb-a67a-136d12a4aaa4"
+# %% colab={"base_uri": "https://localhost:8080/"} id="c36b8b86" outputId="97370cd9-c5c2-455a-d559-f4fb4a687785"
 def tokenize(text, merges=merges):
     splits = [[l for l in word] for word in text.split()]
     for pair, merge in merges.items():
@@ -251,32 +237,26 @@ def tokenize(text, merges=merges):
 print(tokenize("Hello lower lowest", merges=merges_1000))
 print(tokenize("Hello lower lowest", merges=merges_10000))
 
-
 # %% [markdown] id="f133ed5a"
-# ## 📖 Metrics
+# ## 📖 How Good is Our Tokenizer?
 #
-# Evaluating a tokenizer involves assessing how well it processes text and how efficient or linguistically sound it is. Here are key evaluation methods and metrics used to evaluate tokenizers:
+# Let's measure how well our tokenizer works by looking at a few metrics:
 #
-# -	Average Sequence Length (in tokens):
-# For a fixed amount of text, how many tokens are generated.
-# Lower is better — fewer tokens for the same text.
-# -	Compression Ratio:
-# Ratio of original characters to tokens (or bytes per token).
-# Useful in comparing tokenizer compactness. Higher is generally better (for efficiency).
-# - Fertility : average number of tokens per word
+# - **Average Sequence Length**: How many tokens we get for a piece of text (lower is better)
+# - **Compression Ratio**: How much we can compress text (higher is better)
+# - **Fertility**: Average number of tokens per word (lower is better)
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="AWmLO3bpNdEF" outputId="796e5aa8-8360-42a5-e563-21cd045f004c"
 def tokenization_efficiency(texts, tokenizer, merges=merges):
     total_chars = sum(len(text) for text in texts)
     if merges is None:
         total_tokens = sum(len(tokenizer(text)["input_ids"]) for text in texts)
-    else :
+    else:
         total_tokens = sum(len(tokenizer(text, merges=merges)["input_ids"]) for text in texts)
 
     avg_tokens_per_text = total_tokens / len(texts) if texts else 0
     compression_ratio = total_chars / total_tokens if total_tokens else 0
-    # implement fertility based on the definition
-    # 1 line
+    fertility = total_tokens / sum(len(text.split()) for text in texts)
 
     return {
         "average_tokens_per_text": round(avg_tokens_per_text, 3),
@@ -289,10 +269,12 @@ print("Our Tokenizer with vocab_size 10000: ", tokenization_efficiency(corpus[:1
 print("GPT2 Tokenizer : ", tokenization_efficiency(corpus[:100], GPT2Tokenizer.from_pretrained("gpt2"), merges=None))
 
 # %% [markdown] id="HDBobNhANkod"
-#
 # ## 🎯 Summary
 #
-# You learned how tokenization works, explored pretrained tokenizers, and built your own BPE tokenizer from scratch, but generally you will not need to do that, existing tokenizers are already trained very well!
+# Congratulations! You've built your own tokenizer from scratch! Here's what we learned:
 #
-# 🎓 Try applying this to other domains or languages for extra learning.
+# 1. How AI models break down text into tokens
+# 2. How to build a simple BPE tokenizer
+# 3. How to measure how well a tokenizer works
 #
+# 🎓 Try using this tokenizer on different types of text or in different languages to see how it performs!
