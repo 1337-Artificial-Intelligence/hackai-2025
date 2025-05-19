@@ -10,8 +10,9 @@
 #     display_name: Python 3
 #     name: python3
 # ---
+# %% [markdown]
 
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NouamaneTazi/hackai-challenges/blob/main/new_notebooks/embedding_sbert_allnli.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/1337-Artificial-Intelligence/hackai-2025/blob/main/new_notebooks/embedding_sbert_allnli.ipynb)
 
 # %% [markdown]
 # # Text Embeddings with Sentence-BERT

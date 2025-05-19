@@ -1,4 +1,5 @@
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NouamaneTazi/hackai-challenges/blob/main/new_notebooks/embedding_mlm_train_bert_goudma.ipynb)
+# %% [markdown]
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/1337-Artificial-Intelligence/hackai-2025/blob/main/new_notebooks/embedding_mlm_train_bert_goudma.ipynb)
 
 # %% [markdown]
 # # Training a BERT Model for Moroccan Arabic (Darija)

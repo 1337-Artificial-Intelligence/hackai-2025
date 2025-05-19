@@ -14,7 +14,8 @@
 # %% [markdown]
 # # Fine-tuning Al-Atlas with LoRA for Moroccan Darija
 # 
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NouamaneTazi/hackai-challenges/blob/main/new_notebooks/train_sft_lora_alatlas_darijasftdataset.ipynb)
+# %% [markdown]
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/1337-Artificial-Intelligence/hackai-2025/blob/main/new_notebooks/train_sft_lora_alatlas_darijasftdataset.ipynb)
 # 
 # In this notebook, we'll learn how to fine-tune Al-Atlas, a Moroccan Darija language model, using LoRA (Low-Rank Adaptation). This is a memory-efficient way to adapt large language models to specific tasks.
 # 

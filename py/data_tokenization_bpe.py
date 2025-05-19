@@ -1,17 +1,6 @@
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NouamaneTazi/hackai-challenges/blob/main/new_notebooks/data_tokenization_bpe.ipynb)
+# %% [markdown]
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/1337-Artificial-Intelligence/hackai-2025/blob/main/new_notebooks/data_tokenization_bpe.ipynb)
 
-# ---
-# jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.17.1
-#   kernelspec:
-#     display_name: Python 3
-#     name: python3
-# ---
 
 # %% [markdown] id="5b9c8726"
 # # 🏆 Tokenization Challenge: Understanding How AI Reads Text

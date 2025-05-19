@@ -11,8 +11,9 @@
 #     language: python
 #     name: python3
 # ---
+# %% [markdown]
 
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NouamaneTazi/hackai-challenges/blob/main/new_notebooks/data_language_identification_fasttext.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/1337-Artificial-Intelligence/hackai-2025/blob/main/new_notebooks/data_language_identification_fasttext.ipynb)
 
 # %% [markdown]
 # # Language Identification using FastText
