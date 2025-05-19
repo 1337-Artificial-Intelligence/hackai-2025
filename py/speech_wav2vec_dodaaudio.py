@@ -1,14 +1,46 @@
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NouamaneTazi/hackai-challenges/blob/main/new_notebooks/speech_wav2vec_dodaaudio.ipynb)
 # ---
-# jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.17.1
-#   kernelspec:
-#     display_name: Python 3
-#     name: python3
+# # 🎤 Welcome to Speech Recognition with AI! 🇲🇦
+#
+# In this notebook, you'll learn how computers turn Moroccan Darija speech into text using AI. No experience needed! We'll guide you step by step, explain every new word, and show you how to use powerful models like Wav2Vec2.
+#
+# **What will you do?**
+# 1. Listen to and visualize real Moroccan speech data.
+# 2. Learn what a speech recognition model is, and how it works.
+# 3. Try out a pre-trained model (so you don't need a big computer!).
+# 4. (Optional) See how to train your own model if you want to go further.
+#
+# **All code runs on free Google Colab!** If training is slow, we'll show you how to use a ready-made model.
+#
+# Let's get started! 🚀
+#
+# ---
+#
+# ## What is Speech Recognition?
+#
+# **Speech Recognition** (also called Automatic Speech Recognition, or ASR) is when a computer listens to your voice and writes down what you said. It's used in voice assistants, subtitles, and more.
+#
+# ## What is Wav2Vec2?
+#
+# **Wav2Vec2** is a special AI model that can turn raw audio (your voice) into text. It was trained on thousands of hours of speech, so it can understand many accents and ways of speaking.
+#
+# ---
+#
+# ## Moroccan Context
+#
+# In this notebook, we'll use a dataset of Moroccan Darija speech. This is perfect for local projects and helps AI understand our unique way of speaking!
+#
+# ---
+#
+# ## How to Use This Notebook
+#
+# - Run each cell one by one (Shift+Enter in Colab)
+# - Read the short explanations before each code cell
+# - If you see a word you don't know, check the explanation or ask your mentor
+#
+# ---
+#
+# ## TODO: Add a fun image about speech recognition here!
 # ---
 
 # %% [markdown] id="J89BBMBuPaYQ"
@@ -34,16 +66,18 @@
 #
 # ## 2.1 Setting Up Our Toolkit: Installing Libraries
 #
-# Before we can start playing with audio, we need to install a few essential Python libraries. These libraries provide the tools we need to load datasets, manipulate audio signals, and create visualizations. We'll be using:
+# We'll use a few Python libraries to work with speech data. If you're running this on Colab, just run the cell below to install them. (If you see an error about a missing library, run this cell again!)
 #
-# *   `datasets`: To easily download and access datasets from the Hugging Face Hub.
-# *   `torchaudio`: A PyTorch library for audio I/O and basic signal processing.
-# *   `librosa`: A powerful library for audio analysis, especially useful for feature extraction like spectrograms (No worries, we will later what's that...).
-# *   `matplotlib`: The go-to library for plotting and creating static, animated, and interactive visualizations in Python.
-# *   `IPython`: Used here specifically for its ability to play audio directly within the Colab notebook.
+# - `datasets`: lets us easily download and use speech datasets
+# - `torchaudio`: helps us load and process audio files
+# - `librosa`: for audio analysis and making cool visualizations
+# - `matplotlib`: for plotting graphs and images
+# - `IPython`: lets us play audio directly in the notebook
 #
-# Let's install them using pip. Run the following code cell in your Colab environment:
-#
+# **Run this cell if you need to install the libraries:**
+# ```python
+# !pip install -U datasets torchaudio librosa matplotlib IPython
+# ```
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="jWbBlQXzPIJe" outputId="ddef743f-576b-408b-c2a0-ba1b23701203"
 # !pip install -U datasets
@@ -56,6 +90,18 @@
 # ## 2.2 Loading a Speech Dataset from Hugging Face
 #
 # Hugging Face Hub is an amazing resource that hosts thousands of datasets and pre-trained models. For this tutorial, we'll use the `atlasia/DODa-audio-dataset`. This dataset contains moroccan darija audio samples that we can use to explore and later, to fine-tune our model. To load this dataset, we will use the `load_dataset` function from the `datasets` library.
+#
+# ---
+# ## Step 2: Load Moroccan Speech Data
+#
+# A **dataset** is just a big collection of data. Here, we'll use a dataset of Moroccan Darija speech from Hugging Face. Each entry has:
+# - The audio (what was said)
+# - The text in Darija (Latin and Arabic letters)
+# - The English translation
+#
+# We'll use the `atlasia/DODa-audio-dataset`, which has real Moroccan voices. This helps our AI learn how we really speak!
+#
+# ---
 
 # %% colab={"base_uri": "https://localhost:8080/"} id="SytdujR-RNsC" outputId="f4eed0f1-6ee7-4652-fa65-dab7c7145a7d"
 from datasets import load_dataset
@@ -88,9 +134,13 @@ if 'dataset' in locals() and dataset:
 #
 # These fields provide a rich representation of the data across scripts and languages.
 #
-# ## 2.3 Listening to Speech
+# ## 2.3 Listening to Speech 🎧
 #
-# One of the first things you'll want to do with a speech dataset is to actually listen to some of the audio samples. This gives you a direct sense of the data quality, noise levels, and content. We can use `IPython.display.Audio` to play audio directly in our notebook.
+# Before training any AI, it's good to listen to your data! This helps you understand:
+# - How people really speak (accents, speed, background noise)
+# - If the recordings are clear or noisy
+#
+# Let's listen to a few Moroccan Darija samples from our dataset. Try to notice different accents or any background sounds!
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 557} id="4TkeKtKGoSIc" outputId="49cfa14f-ef68-4fe5-c2b9-a4b2141e5f2e"
 import IPython.display as ipd
@@ -297,11 +347,11 @@ vocab_list
 # %% [markdown] id="MGyvnW55_Bze"
 # ### 🧠 Let's Talk About Vocabulary!
 #
-# When you look at the list below, you’ll see lots of strange or unnecessary characters — things like punctuation marks, special diacritics, and even numbers.
+# When you look at the list below, you'll see lots of strange or unnecessary characters — things like punctuation marks, special diacritics, and even numbers.
 #
 # ```python
 # # This is an example of a "messy" vocabulary extracted directly from raw text data
-# messy_vocabulary_example = ['’','ش','ر','َ','؟','ب','0','ص','ؤ','ث','پ','9',',','3','ء','?',
+# messy_vocabulary_example = ['','ش','ر','َ','؟','ب','0','ص','ؤ','ث','پ','9',',','3','ء','?',
 #  'ة','خ','غ','ي','ف','-','ى','2','أ','ك','ظ','و','1','ّ','ُ','ت',
 #  'ض','ح','س','ئ','د','5','ه','ل','ڤ','ط','ڭ','إ','!','"',' ','ا',
 #  ':','6','ق','ذ','ز','ن','ج','.','،','ع','ً','م','آ']
@@ -311,7 +361,7 @@ vocab_list
 # Because it was built automatically from data not fully cleaned, not filtered. So, yes:
 #
 # ✅ it includes Arabic letters (like ش, ر, ب)
-# ✅ but also punctuation (like ؟, ,, .), numbers (0-9), and even other symbols (like ’, ،, َ, ً, ُ, ّ)
+# ✅ but also punctuation (like ؟, ,, .), numbers (0-9), and even other symbols (like ','،, َ, ً, ُ, ّ)
 #
 # ### 💡 Hint for You & Your Thoughts
 # Try to think about:
@@ -481,235 +531,8 @@ raw_dataset = raw_dataset.map(prepare_dataset)
 # Awesome, now we are ready to start training!
 
 # %% [markdown] id="m4u9pAQUKRWd"
-# # Section 4: Training & Evaluation
-#
-# The data is processed so that we are ready to start setting up the training pipeline. We will make use of 🤗's [Trainer](https://huggingface.co/transformers/master/main_classes/trainer.html?highlight=trainer) for which we essentially need to do the following:
-#
-# - Define a data collator. In contrast to most NLP models, Wav2Vec2 has a much larger input length than output length. *E.g.*, a sample of input length 50000 has an output length of no more than 100. Given the large input sizes, it is much more efficient to pad the training batches dynamically meaning that all training samples should only be padded to the longest sample in their batch and not the overall longest sample. Therefore, fine-tuning Wav2Vec2 requires a special padding data collator, which we will define below
-#
-# - Evaluation metric. During training, the model should be evaluated on the word error rate. We should define a `compute_metrics` function accordingly
-#
-# - Load a pretrained checkpoint. We need to load a pretrained checkpoint and configure it correctly for training.
-#
-# - Define the training configuration.
-#
-# After having fine-tuned the model, we will correctly evaluate it on the test data and verify that it has indeed learned to correctly transcribe speech.
-
-# %% [markdown] id="CzWzW6CiKncL"
-# ### 4.1 Define Data Collator
-#
-# This class will take care of padding our inputs and labels dynamically per batch.
-#
-
-# %% colab={"base_uri": "https://localhost:8080/"} id="dxOSOQC_KQ6x" outputId="ea29bf20-3acf-49e8-909a-fe1f1abfe7e9"
-import torch
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Union
-
-
-@dataclass
-class DataCollatorCTCWithPadding:
-    processor: Wav2Vec2Processor
-    padding: Union[bool, str] = True
-
-    def __call__(self, features: List[Dict[str, Union[List[int], torch.Tensor]]]) -> Dict[str, torch.Tensor]:
-        # Split inputs and labels since they have to be of different lenghts and need
-        # different padding methods
-        input_features = [{"input_values": feature["input_values"]} for feature in features]
-        label_features = [{"input_ids": feature["labels"]} for feature in features]
-
-        batch = self.processor.pad(
-            input_features,
-            padding=self.padding,
-            return_tensors="pt",
-        )
-        labels_batch = self.processor.pad(
-            labels=label_features,
-            padding=self.padding,
-            return_tensors="pt",
-        )
-
-        # Replace padding with -100 to ignore loss correctly
-        labels = labels_batch["input_ids"].masked_fill(labels_batch.attention_mask.ne(1), -100)
-
-        batch["labels"] = labels
-        return batch
-
-if processor:
-    data_collator = DataCollatorCTCWithPadding(processor=processor, padding=True)
-    print("Data collator defined.")
-else:
-    data_collator = None
-    print("Some Problem is there, call Mentor.")
-
-
-# %% [markdown] id="bbHJHtoFLFcp"
-# ### 4.2 Define Evaluation Metrics (WER & CER)
-#
-# Word Error Rate (WER) and Character Error Rate (CER) are standard metrics for ASR.
-#
-
-# %% colab={"base_uri": "https://localhost:8080/"} id="gAQX3eXkLeB7" outputId="2ac683ce-ed39-4a5f-c8da-b656ac6a9929"
-# !pip install jiwer
-
-# %% [markdown] id="YIS9UN1fMKD8"
-# We introduced WER and CER earlier, but let's delve deeper. These are the standard metrics to evaluate the performance of an ASR system.
-#
-# *   **Word Error Rate (WER):** This metric measures errors at the word level. It's calculated by comparing the predicted sequence of words with the reference (ground truth) transcription. The formula is:
-#
-#     `WER = (S + D + I) / N`
-#
-#     Where:
-#     *   `S` is the number of substitutions (words in the prediction that are different from the reference at the same position, e.g., reference "hello world", prediction "hallo world" -> 1 substitution).
-#     *   `D` is the number of deletions (words in the reference that are missing in the prediction, e.g., reference "hello brave new world", prediction "hello new world" -> 1 deletion, "brave").
-#     *   `I` is the number of insertions (words in the prediction that are not in the reference, e.g., reference "hello world", prediction "hello there world" -> 1 insertion, "there").
-#     *   `N` is the total number of words in the reference transcription.
-#
-#     A lower WER is better, with 0% being a perfect transcription. WER can sometimes be greater than 100% if the prediction is much longer than the reference and has many errors.
-#
-# *   **Character Error Rate (CER):** This metric is similar to WER but operates at the character level. It's useful for languages without clear word boundaries (like Chinese or Japanese) or to get a more granular view of errors, especially for out-of-vocabulary words that might be partially correct at the character level.
-#
-#     `CER = (S_char + D_char + I_char) / N_char`
-#
-#     Where `S_char`, `D_char`, `I_char` are substitutions, deletions, and insertions at the character level, and `N_char` is the total number of characters in the reference transcription.
-#
-#     Again, lower CER is better. CER is often more sensitive to minor misspellings or phonetic errors that WER might not capture if the word is still mostly correct.
-#
-# Both metrics provide valuable insights. WER gives a more practical sense of how understandable the transcription is, while CER can help diagnose issues at a finer level.
-#
-#
-# Why do we use metrics like WER and CER? Why not simply use accuracy — for example, assigning 0 if the predicted sentence exactly matches the reference, and 1 otherwise?
-#
-
-# %% colab={"base_uri": "https://localhost:8080/", "height": 66, "referenced_widgets": ["50853fa6c3ac4b998bd781709e076fe8", "152d36e115d64d2ba6c565bf40571d62", "4615760c87e84c2da67236f00292a822", "6103723df26d4a7289fc361aecf035c3", "8c2d42697657427e90c1234ae22901f8", "fb21e72ae37044f1b20061bb78805e2b", "39c385ab46ed4155b7be29d4c806cfba", "3722013457eb4c8082393c964c96002d", "ae9f309d8b3f41a38b09746dac076c38", "bfb25a3f27e840018ce63cb960b144cb", "1d19e55f5b7b463c90d587b0517844ab"]} id="ZjxmLj9bLFwG" outputId="d129e842-ae75-4884-df64-41f26a14f4f7"
-import evaluate
-
-wer_metric = evaluate.load("wer")
-cer_metric = evaluate.load("cer")
-
-def compute_metrics(pred):
-    pred_logits = pred.predictions
-    pred_ids = np.argmax(pred_logits, axis=-1)
-
-    # Decode predictions
-    pred_str = processor.batch_decode(pred_ids)
-    label_ids_cleaned = []
-    for label_seq in pred.label_ids:
-        label_ids_cleaned.append([token_id for token_id in label_seq if token_id != -100 and token_id != processor.tokenizer.pad_token_id])
-    label_str = processor.batch_decode(label_ids_cleaned, group_tokens=False) # group_tokens=False for char-level
-
-    wer = wer_metric.compute(predictions=pred_str, references=label_str)
-    cer = cer_metric.compute(predictions=pred_str, references=label_str)
-
-    return {"wer": wer, "cer": cer}
-
-print("Metrics functions defined.")
-
-# %% [markdown] id="SA8q1DmPM1UB"
-# ### 4.3 Load Pre-trained Model
-#
-# We'll load a pre-trained Wav2Vec2 model designed for CTC (Connectionist Temporal Classification), which is the common loss function for this type of ASR.
-#
-
-# %% colab={"base_uri": "https://localhost:8080/", "height": 188, "referenced_widgets": ["27b5fc973db4467a9a8f6cc37661d487", "f9404cef0c5d4f41863c1037341c8dac", "cd393865d1f947b0bbd6f2cabfd9191d", "6de52cc159854f3fb30731003ee98af4", "db86b196f51e4a868a197ddf11da9b4a", "22b9ae1251d6453ca8cfd624a1f9c705", "b4dc12ee5c53412dbc4a6793052c59f3", "12e33c4c63c2421cafaf16dff191a15c", "14289f892cc74891b484a508a7cf03cd", "e3220316a00b428c8d3aa67d58865c4b", "befdb38407514f70843a4901153467dd", "d9384445168743db9461b966c2dbaf4a", "9c5848639a1a4a61a6f55dfaab3e332f", "33c56ecbff6d4b3183f471f35765893b", "0eb6888c5f1c4963bafba011626778cf", "072def5528954464b0fba9076649098c", "f8dbf164c30f4533ae220eb1ff0f389e", "9c55e8aa823646f4b155947ac88e890e", "d52fa347bad549a0acfd7003284d6cb0", "bcb48b3ad7df45e3aea29f2e3cf88d1b", "ea9c6a1142e04ca6a0cac678a7cc0fb5", "3c42b93ddc1f444299988fbbf58b33a2"]} id="poN-Z1OvM0jZ" outputId="e014d106-7baf-4729-9fca-f17fde1149e0"
-from transformers import Wav2Vec2ForCTC
-
-if processor:
-    try:
-        model = Wav2Vec2ForCTC.from_pretrained(
-            "facebook/wav2vec2-base",  # A common base model
-            ctc_loss_reduction="mean",
-            pad_token_id=processor.tokenizer.pad_token_id,
-            vocab_size=len(processor.tokenizer) # Ensure vocab size matches our tokenizer
-        )
-        # Freeze feature encoder layers if you want to train only the top layers (common practice)
-        # model.freeze_feature_encoder()
-        print("Pre-trained model loaded.")
-    except Exception as e:
-        print(f"Error loading pre-trained model: {e}")
-        model = None
-else:
-    model = None
-    print("Processor not available, skipping model loading.")
-
-
-# %% [markdown] id="G0xRpwR8M8-i"
-# ### 4.4 Define Training Arguments
-#
-# These arguments control the training process.
-#
-
-# %% colab={"base_uri": "https://localhost:8080/"} id="dNifwRNxMp_6" outputId="00cef00e-87e6-4e4e-9aa2-efdd5857ff43"
-from transformers import TrainingArguments
-
-# Define a directory for saving model outputs (checkpoints, logs)
-output_dir = "./wav2vec2-finetuned-hackai-demo"
-
-# These are example arguments. Adjust them based on your resources and dataset size.
-# For a quick demo, we use very few steps.
-training_args = TrainingArguments(
-    output_dir=output_dir,
-    group_by_length=True, # Speeds up training by batching similar length inputs
-    per_device_train_batch_size=2, # Reduce if OOM, increase if GPU memory allows
-    per_device_eval_batch_size=2,
-    eval_strategy="steps",
-    num_train_epochs=3, # For demo.
-    save_steps=100, # Save checkpoint every N steps (adjust based on training length)
-    eval_steps=100, # Evaluate every N steps
-    logging_steps=10, # Log metrics every N steps
-    learning_rate=3e-4, # Common starting point for Wav2Vec2 fine-tuning
-)
-print("Training arguments defined.")
-
-# %% [markdown] id="6Rkb-JzINkWv"
-# ### 4.5 Instantiate the Trainer
-#
-# Now, we bring everything together using the `Trainer` class.
-#
-
-# %% colab={"base_uri": "https://localhost:8080/"} id="gxQ_dEX_NjVi" outputId="1437bbba-37cf-4bc8-f256-c71f4b9e0f36"
-from transformers import Trainer
-import numpy as np # ensure numpy is imported
-import dataclasses # ensure dataclasses is imported
-from typing import Dict, List, Optional, Union # ensure typing is imported
-
-trainer = Trainer(
-    model=model,
-    data_collator=data_collator,
-    args=training_args,
-    compute_metrics=compute_metrics,
-    train_dataset=raw_dataset, # Use the small preprocessed dataset
-    eval_dataset=raw_dataset,  # For demo, using same small set for eval. Ideally, use a separate validation set.
-    tokenizer=processor.feature_extractor, # Important for the Trainer to handle feature extraction correctly
-    report
-)
-
-# %% [markdown] id="rKJuR0p5NxP1"
-# ### 4.6 Start Fine-tuning!
-#
-# This is where the actual training happens.
-#
-
-# %% colab={"background_save": true, "base_uri": "https://localhost:8080/", "height": 175} id="TYHTZp6nNfzG" outputId="35c36efd-f50a-45b8-944b-26407e9a8e8c"
-if trainer:
-    print("Starting fine-tuning...")
-    try:
-        trainer.train()
-        print("Fine-tuning completed.")
-        # Save the final model and processor
-        model_save_path = f"{output_dir}/final_model"
-        processor.save_pretrained(model_save_path)
-        trainer.save_model(model_save_path)
-        print(f"Final model and processor saved to {model_save_path}")
-    except Exception as e:
-        print(f"Error during training: {e}")
-        print("If you are getting CUDA out of memory, try reducing batch_size or gradient_accumulation_steps, or use a smaller model (Call a Mentor to assess).")
-else:
-    print("Trainer not instantiated, Go back Hahaha, no skipping.")
-
-
-# %% [markdown] id="NyU_Etn973Rx"
 # # Section 5: Final Exercise – Show Us Your Acoustic Talents
+#
 # Your task is to create three speech samples and test them using a pretrained Arabic model from Hugging Face. The challenge? Push the system to its limits and try to generate samples that result in a Word Error Rate (WER) above 50%.
 #
 # How you challenge the model is entirely up to you — be creative! You might try background noise, strong accents, unusual phrasing, or any technique that makes recognition more difficult. We're here to see how well you can break the system and showcase your audio manipulation skills.
@@ -790,3 +613,13 @@ for idx, error, ref, hyp in results:
 # # 👋 Need Help with Anything Speech-Related?
 # If you're interested in incorporating text-to-speech or any speech component into your project, feel free to reach out to Yassine El Kheir at yassine.el_kheir@dfki.de.
 # I'd be happy to give you a hand and share some helpful tips!
+
+# ---
+# 🎉 **Congrats! You've completed the speech-to-text challenge.**
+#
+# - Try more Moroccan audio, or even your friends' voices!
+# - Share your results with your classmates or mentors.
+# - If you're curious, explore other Moroccan datasets or models on [Hugging Face](https://huggingface.co/models?language=ar&search=moroccan).
+#
+# If you have questions, don't hesitate to ask. Keep experimenting and have fun with AI!
+# ---
