@@ -1,5 +1,11 @@
 # HackAI Morocco 2025
 
+<div align="center">
+  <h2>🤝 Contributions Welcome!</h2>
+  <p>We welcome contributions from the community! Whether it's fixing bugs, adding new notebooks, or improving documentation, every contribution helps make this project better.</p>
+</div>
+
+
 ## About
 HackAI Morocco is a 4-day AI hackathon that brings together students from across Morocco for an unforgettable experience filled with innovation, challenges, and learning. This unique event combines technical excellence with creative problem-solving in the field of artificial intelligence.
 
