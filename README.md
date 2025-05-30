@@ -39,7 +39,7 @@ We're actively maintaining the notebooks in this repository for similar hackatho
 
 | Category | Challenge | Description | Notebook |
 |----------|-----------|-------------|-----------|
-| 📊 **Data Processing & Analysis** | Data Cleaning | Clean and process Moroccan Arabic (Darija) datasets | COMING SOON |
+| 📊 **Data Processing & Analysis** | Data Cleaning | Clean and process Moroccan Arabic (Darija) datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/%F0%9F%8F%86%20Mini_Challenge_Data_Cleanup_Tweet_Dataset_(Darija).ipynb) |
 | | Language Identification | Build systems for Arabic dialect identification | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/data_lid.ipynb) |
 | | Web Scraping | Create efficient data collection pipelines using BeautifulSoup4 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/data_scraping_bs.ipynb) |
 | | Tokenizer | Build and train custom tokenizers | COMING SOON |
@@ -98,7 +98,7 @@ We would like to thank all the sponsors and partners who made this event possibl
 - Afaf El Wafi
 - Ahmed Lekssays
 - Imane Momayiz
-- Ihssane Nedjoui
+- Ihssane Nedjaoui
 - Jawaher Chennak
 - Kawtar Zerhouni
 - Khadija Bayoud
