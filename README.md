@@ -83,6 +83,12 @@ Our team of experienced mentors includes professionals from:
 - Sigma Nova
 - Impactera
 - ToumAI Analytics
+- DFKI
+- MP DATA
+- CRSA
+- AI Exploration LAB
+- ATLASIA
+- Clear Global
 - And more...
 
 ## Organizers
@@ -91,25 +97,28 @@ The event is organized by a dedicated team of students and professionals from 13
 ## Acknowledgements
 We would like to thank all the sponsors and partners who made this event possible, and the mentors who spent days iterating on the notebooks to make them fun and engaging for the participants:
 
-- Abdeljalil Elmajjodi
-- Abderrahmane Moujar
-- Abir Harrasse
-- Achraf Mamdouh
-- Afaf El Wafi
-- Ahmed Lekssays
-- Imane Momayiz
-- Ihssane Nedjaoui
-- Jawaher Chennak
-- Kawtar Zerhouni
-- Khadija Bayoud
-- Khalid Benlyazid
-- Mohamed Aymane Farhi
-- Mohamed Mekkouri
-- Mounia El Koraichi
-- Nouamane Tazi
-- Otmane El Bourki
-- Yassine El Kheir
-- Yassir Bendou
+- [Abdeljalil Elmajjodi](https://www.linkedin.com/in/abdeljalil-el-majjodi/) 
+- [Abderrahmane Moujar](https://www.linkedin.com/in/moujar/)
+- [Abir Harrasse](https://www.linkedin.com/in/abir-harrasse-a5120b20a/)
+- [Achraf Mamdouh](https://www.linkedin.com/in/achraf-mamdouh-914829112/)
+- [Afaf El Wafi](https://www.linkedin.com/in/afaf-el-wafi-522744150/)
+- [Ahmed Lekssays](https://www.linkedin.com/in/ahmed-lekssays-2b118b110/)
+- [Imane Momayiz](https://www.linkedin.com/in/imane-momayiz/)
+- [Ihssane Nedjaoui](https://www.linkedin.com/in/ihssanenedjaoui/)
+- [Jawaher Chennak](https://www.linkedin.com/in/jawaher-chennak/)
+- [Kawtar Zerhouni](https://www.linkedin.com/in/kawtar-zerhouni-b6a9205a/)
+- [Khadija Bayoud](https://www.linkedin.com/in/khadija-bayoud-218b231b3/)
+- [Khalid Benlyazid](https://www.linkedin.com/in/benlyazid/)
+- [Mohamed Aymane Farhi](https://www.linkedin.com/in/mohamed-aymane-farhi/)
+- [Mohamed Mekkouri](https://www.linkedin.com/in/mohamed-mekkouri/)
+- [Mounia El Koraichi](https://www.linkedin.com/in/elmounikor/)
+- [Nouamane Tazi](https://www.linkedin.com/in/nouamanetazi/)
+- [Otmane El Bourki](https://www.linkedin.com/in/oelbourki/)
+- [Yassine El Kheir](https://www.linkedin.com/in/yassine-el-kheir-169b97191/)
+- [Yassir Bendou](https://www.linkedin.com/in/yassir-bendou/)
+- The Designer: [Noureddine Tahadout](https://www.linkedin.com/in/noureddine-tahadout-7465b51bb/)
+- The Dev Team of HackAI: [Issam Laafar](https://www.linkedin.com/in/laafar-issam/), [Hassan karrach](https://www.linkedin.com/in/hassankarrach/), [Imran Baali](https://www.linkedin.com/in/imran-baali/), and [Mossaab Amimar](https://www.linkedin.com/in/mossaabamimar/)
+
 
 ## Contact
 For any inquiries, please reach out to us through [LinkedIn](https://www.linkedin.com/company/1337ai/) or email us at contact@1337ai.org
