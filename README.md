@@ -68,8 +68,8 @@ We're actively maintaining the notebooks in this repository for similar hackatho
 | 🎨 **Image Generation** | DDPM | Denoising Diffusion Probabilistic Models | COMING SOON |
 | | Stable Diffusion Usage | Use Stable Diffusion models | COMING SOON |
 | | Stable Diffusion Finetune | Fine-tune Stable Diffusion models | COMING SOON |
-| 👁️ **Vision Language Models** | VLM Usage | Use Vision Language Models | COMING SOON |
-| | VLM Finetuning | Fine-tune Vision Language Models | COMING SOON |
+| 👁️ **Vision Language Models** | VLM Usage | Use Vision Language Models | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/vlm/vlm_usage.ipynb) |
+| | VLM Finetuning | Fine-tune Vision Language Models | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/vlm/vlm_finetuning.ipynb) |
 
 ## Speakers
 - Achraf Mamdouh (Senior Software Engineer @ Google)
