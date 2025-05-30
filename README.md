@@ -88,9 +88,28 @@ Our team of experienced mentors includes professionals from:
 ## Organizers
 The event is organized by a dedicated team of students and professionals from 1337AI and friends
 
-## Resources
-- [Official Website](https://hackai.ma)
+## Acknowledgements
+We would like to thank all the sponsors and partners who made this event possible, and the mentors who spent days iterating on the notebooks to make them fun and engaging for the participants:
 
+- Abdeljalil Elmajjodi
+- Abderrahmane Moujar
+- Abir Harrasse
+- Achraf Mamdouh
+- Afaf El Wafi
+- Ahmed Lekssays
+- Imane Momayiz
+- Ihssane Nedjoui
+- Jawaher Chennak
+- Kawtar Zerhouni
+- Khadija Bayoud
+- Khalid Benlyazid
+- Mohamed Aymane Farhi
+- Mohamed Mekkouri
+- Mounia El Koraichi
+- Nouamane Tazi
+- Otmane El Bourki
+- Yassine El Kheir
+- Yassir Bendou
 
 ## Contact
 For any inquiries, please reach out to us through [LinkedIn](https://www.linkedin.com/company/1337ai/) or email us at contact@1337ai.org
