@@ -93,8 +93,8 @@ The event is organized by a dedicated team of students and professionals from 13
 
 
 ## Contact
-For any inquiries, please reach out to us through our [contact form](https://hackai.ma/contact).
+For any inquiries, please reach out to us through [LinkedIn](https://www.linkedin.com/company/1337ai/) or email us at contact@1337ai.org
 
 ---
 
-*Join us for an extraordinary journey into the world of AI innovation!* 
+*With ❤️ from 1337AI and friends*
