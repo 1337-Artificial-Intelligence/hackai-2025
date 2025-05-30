@@ -33,33 +33,32 @@ We're actively maintaining the notebooks in this repository for similar hackatho
 
 | Category | Challenge | Description | Notebook |
 |----------|-----------|-------------|-----------|
-| 🤖 **AI Agents & Prompt Engineering** | MCP | Build an MCP server | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/agents/agents_mcp.ipynb) |
-| | SmolAgents | Develop agents that can effectively use tools and APIs using smolagents like tools | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/agents/agents_smolagents.ipynb) |
-| | Prompt Engineering | Create robust and efficient prompts for various AI applications | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/agents/prompt_engineering.ipynb) |
-| 🔄 **Alignment** | DPO Training | Implement Direct Preference Optimization for Arabic language models | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/alignment/alignment_dpo_aragpt2_arabicpreference.ipynb) |
-| | DPO Usage | Use DPO for model alignment | COMING SOON |
-| | PPO Training | Develop models using Proximal Policy Optimization | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/alignment/alignment_ppo_alatlas_msac.ipynb) |
 | 📊 **Data Processing & Analysis** | Data Cleaning | Clean and process Moroccan Arabic (Darija) datasets | COMING SOON |
 | | Language Identification | Build systems for Arabic dialect identification | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/data_lid.ipynb) |
 | | Web Scraping | Create efficient data collection pipelines using BeautifulSoup4 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/data_scraping_bs.ipynb) |
 | | Tokenizer | Build and train custom tokenizers | COMING SOON |
+| | Synthetic Data Generation | Generate synthetic data for training | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/synt_data_.ipynb) |
 | 🏋️‍♂️ **LLM Training** | LLM Pretraining | Pretrain your first LLM | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/llm/pretrain_llm.ipynb) |
 | | SFT LoRA | Fine-tune models using LoRA | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/llm/sft_lora.ipynb) |
 | | Optimize Training | Optimize LLM training process | COMING SOON |
 | 🚀 **Deployment** | Optimize Inference | Optimize model inference | COMING SOON |
 | | Deployment Demo | Deploy models with API | COMING SOON |
 | | Quantization | Quantize models for efficient deployment | COMING SOON |
+| 🤖 **AI Agents & Prompt Engineering** | MCP | Build an MCP server | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/agents/agents_mcp.ipynb) |
+| | SmolAgents | Develop agents that can effectively use tools and APIs using smolagents like tools | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/agents/agents_smolagents.ipynb) |
+| | Prompt Engineering | Create robust and efficient prompts for various AI applications | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/agents/prompt_engineering.ipynb) |
+| 🔄 **Alignment** | DPO Training | Implement Direct Preference Optimization for Arabic language models | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/alignment/alignment_dpo_aragpt2_arabicpreference.ipynb) |
+| | DPO Usage | Use DPO for model alignment | COMING SOON |
+| | PPO Training | Develop models using Proximal Policy Optimization | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/alignment/alignment_ppo_alatlas_msac.ipynb) |
 | 🧠 **Reasoning** | GRPO for Math | Fine-tune models for mathematical reasoning | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/reasoning/alignment_grpo_qwen3_math.ipynb) |
 | 🎤 **ASR** | ASR Usage | Implement automatic speech recognition | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/ASR_usage.ipynb) |
-| | ASR Finetune | Fine-tune ASR models | COMING SOON |
-| | Speech to Text | Convert speech to text using ASR | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/Speech_To_Text(ASR).ipynb) |
+| | ASR Finetuning | Finetune ASR models | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/Speech_To_Text(ASR).ipynb) |
 | | Word Level Alignment | Implement word-level force alignment | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/word_level_force_alignment.ipynb) |
 | 🗣️ **TTS** | TTS Usage | Text-to-speech implementation | COMING SOON |
 | | TTS Finetune | Fine-tune TTS models | COMING SOON |
 | 📊 **Embedding models** | SBERT Embedding | Fine-tune SBERT model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/embedding/embedding_sbert.ipynb) |
 | | Pretrain MLM | Masked Language Modeling Training | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/embedding/prtrain_mlm.ipynb) |
 | | RAG/Classification | Use embeddings for RAG and classification | COMING SOON |
-| 🔄 **Synthetic Data** | Data Generation | Generate synthetic data for training | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/synthetic_data/synt_data_.ipynb) |
 | 🎨 **Image Generation** | DDPM | Denoising Diffusion Probabilistic Models | COMING SOON |
 | | Stable Diffusion Usage | Use Stable Diffusion models | COMING SOON |
 | | Stable Diffusion Finetune | Fine-tune Stable Diffusion models | COMING SOON |
