@@ -40,7 +40,7 @@ We're actively maintaining the notebooks in this repository for similar hackatho
 | | DPO Usage | Use DPO for model alignment | COMING SOON |
 | | PPO Training | Develop models using Proximal Policy Optimization | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/alignment/alignment_ppo_alatlas_msac.ipynb) |
 | 📊 **Data Processing & Analysis** | Data Cleaning | Clean and process Moroccan Arabic (Darija) datasets | COMING SOON |
-| | Language Identification | Build systems for Arabic dialect identification | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/data_language_identification_fasttext.ipynb) |
+| | Language Identification | Build systems for Arabic dialect identification | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/data_lid.ipynb) |
 | | Web Scraping | Create efficient data collection pipelines using BeautifulSoup4 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/data/data_scraping_bs.ipynb) |
 | | Tokenizer | Build and train custom tokenizers | COMING SOON |
 | 🏋️‍♂️ **LLM Training** | LLM Pretraining | Pretrain your first LLM | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/llm/pretrain_llm.ipynb) |
