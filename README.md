@@ -51,10 +51,10 @@ We're actively maintaining the notebooks in this repository for similar hackatho
 | | DPO Usage | Use DPO for model alignment | COMING SOON |
 | | PPO Training | Develop models using Proximal Policy Optimization | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/alignment/alignment_ppo_alatlas_msac.ipynb) |
 | 🧠 **Reasoning** | GRPO for Math | Fine-tune models for mathematical reasoning | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/reasoning/alignment_grpo_qwen3_math.ipynb) |
-| 🎤 **ASR** | ASR Usage | Implement automatic speech recognition | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/ASR_usage.ipynb) |
+| 🎤 **Automatic Speech Recognition** | ASR Usage | Implement automatic speech recognition | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/ASR_usage.ipynb) |
 | | ASR Finetuning | Finetune ASR models | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/Speech_To_Text(ASR).ipynb) |
 | | Word Level Alignment | Implement word-level force alignment | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/speech/word_level_force_alignment.ipynb) |
-| 🗣️ **TTS** | TTS Usage | Text-to-speech implementation | COMING SOON |
+| 🗣️ **Text-to-Speech** | TTS Usage | Text-to-speech implementation | COMING SOON |
 | | TTS Finetune | Fine-tune TTS models | COMING SOON |
 | 📊 **Embedding models** | SBERT Embedding | Fine-tune SBERT model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/embedding/embedding_sbert.ipynb) |
 | | Pretrain MLM | Masked Language Modeling Training | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/1337-Artificial-Intelligence/hackai-2025/blob/main/notebooks/embedding/prtrain_mlm.ipynb) |
